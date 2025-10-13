@@ -13,17 +13,27 @@ const navigate = useNavigate()
     axios.get(`${BASE_URL}/user/allUsers`,{},{withCredentials:true}).then((res)=>setAllUser(res.data.users)).catch(error=>console.log(error))
   },[allUser])
 
-  const handleDelete = async (id)=>{
-    try {
-      const res = await  axios.delete(`${BASE_URL}/user/deleteAuth/${id}`,{},{withCredentials:true})
-      if(res.data?.success){
-        toast.success(res.data?.message)
+ const handleDelete = async (id) => {
+  try {
+    const isConfirmed = window.confirm(`Do you want to delete this user with ID: ${id}?`);
+
+    if (isConfirmed) {
+      const res = await axios.delete(`${BASE_URL}/user/deleteAuth/${id}`, {
+        withCredentials: true,
+      });
+
+      if (res.data?.success) {
+        toast.success(res.data?.message);
+      } else {
+        toast.error(res.data?.message || "Failed to delete user");
       }
-    } catch (error) {
-      toast.error("failed to delete user")
     }
-  
+  } catch (error) {
+    toast.error("Failed to delete user");
+    console.error(error);
   }
+};
+
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <div className="bg-white rounded-xl shadow-md overflow-hidden">

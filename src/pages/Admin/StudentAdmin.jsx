@@ -18,13 +18,16 @@ const StudentAdmin = () => {
 
   const handleDelete = async (id) => {
     try {
-      const res = await axios.delete(`${BASE_URL}/student/delete-student/${id}`, {
+          const isConfirmed = window.confirm(`Do you want to delete this student with ID: ${id}?`);
+          if(isConfirmed){
+            const res = await axios.delete(`${BASE_URL}/student/delete-student/${id}`, {
         withCredentials: true,
       });
       if (res.data?.success) {
         toast.success(res.data?.message);
         setStudentDet((prev) => prev.filter((student) => student._id !== id));
       }
+       }
     } catch (error) {
       toast.error("Failed to delete user");
     }
