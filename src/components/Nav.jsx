@@ -40,7 +40,7 @@ export default function Nav() {
         onClick={() => navigate("/")}
         className="text-2xl font-bold text-blue-600 cursor-pointer select-none"
       >
-        MyLogo
+       <img  className="object-cover" src="./fms_logo.jpg" alt="" />
       </div>
 
       {/* 🔹 Hamburger Menu (Visible on Mobile) */}
