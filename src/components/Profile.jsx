@@ -41,7 +41,7 @@ function ProfilePage() {
             <p className="text-gray-700"><span className="font-medium">Year:</span> {student.year}</p>
             <p className="text-gray-700">
               <span className="font-medium">
-                Total {student.course === "MBA" || student.course === "M.Tech" || student.course === "Diploma" ? "3" : student.course === "B.Tech" ? "4" : ""} Year Course Fee:
+                Total {student.course === "MBA" || student.course === "M.Tech" ? "2" : student.course === "B.Tech" ? "4" : student.course === "Diploma" ?"3":""} Year Course Fee:
               </span>{" "}
               ₹{student.courseFee || "N/A"}
             </p>
