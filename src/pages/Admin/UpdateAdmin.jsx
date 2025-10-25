@@ -76,6 +76,8 @@ const UpdateAdmin = () => {
         { withCredentials: true }
       );
       if (res.data?.success) {
+        console.log(res.data.student);
+        
         toast.success(res.data.message || "Student updated successfully");
         navigate("/admin/students");
       } else {
