@@ -57,7 +57,7 @@ const navigate = useNavigate()
             <tbody>
               {allUser.map((user, index) => (
                 <tr
-                  key={user.id}
+                  key={user._id}
                   className="border-t hover:bg-gray-50 transition duration-150"
                 >
                   <td className="px-6 py-4">{index + 1}</td>

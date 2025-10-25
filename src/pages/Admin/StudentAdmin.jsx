@@ -48,13 +48,13 @@ const StudentAdmin = () => {
               <tr>
                 <th className="px-6 py-3 text-left">SI No</th>
                 <th className="px-6 py-3 text-left">Full Name</th>
-                <th className="px-6 py-3 text-left">Father’s Name</th>
+                <th className="px-6 py-3 text-left hidden lg:table-cell">Father’s Name</th>
                 <th className="px-6 py-3 text-left hidden md:table-cell">Mother’s Name</th>
-                <th className="px-6 py-3 text-left hidden lg:table-cell">Phone No</th>
+                <th className="px-6 py-3 text-left ">Phone No</th>
                 <th className="px-6 py-3 text-left">Course</th>
                 <th className="px-6 py-3 text-left">Year</th>
                 <th className="px-6 py-3 text-left hidden md:table-cell">Email</th>
-                <th className="px-6 py-3 text-left hidden lg:table-cell">Course Fee</th>
+                <th className="px-6 py-3 text-left ">Course Fee</th>
                 <th className="px-6 py-3 text-center">Actions</th>
               </tr>
             </thead>
@@ -69,9 +69,9 @@ const StudentAdmin = () => {
                   <td className="px-6 py-4 font-semibold text-gray-900">
                     {student.firstName} {student.lastName}
                   </td>
-                  <td className="px-6 py-4">{student.fathersName}</td>
+                  <td className="px-6 py-4 hidden lg:table-cell">{student.fathersName}</td>
                   <td className="px-6 py-4 hidden md:table-cell">{student.mothersName}</td>
-                  <td className="px-6 py-4 hidden lg:table-cell">{student.phoneNo}</td>
+                  <td className="px-6 py-4 ">{student.phoneNo}</td>
                   <td className="px-6 py-4">{student.course}</td>
 
                   {/* 🎨 Year Badge */}
@@ -94,7 +94,7 @@ const StudentAdmin = () => {
                   </td>
 
                   <td className="px-6 py-4 hidden md:table-cell">{student.email}</td>
-                  <td className="px-6 py-4 hidden lg:table-cell">
+                  <td className="px-6 py-4 ">
                     ₹{student.courseFee?.toLocaleString() || "-"}
                   </td>
                   
