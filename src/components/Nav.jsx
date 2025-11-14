@@ -38,9 +38,9 @@ export default function Nav() {
       {/* 🔷 Logo */}
       <div
         onClick={() => navigate("/")}
-        className="text-2xl font-bold text-blue-600 cursor-pointer select-none"
+        className="text-2xl font-bold text-blue-600 rounded-full overflow-hidden cursor-pointer select-none"
       >
-       <img  className="object-cover w-30" src="./fms_logo.jpg" alt="" />
+       <img  className="object-cover w-20" src="./fms_logo.png" alt="" />
       </div>
 
       {/* 🔹 Hamburger Menu (Visible on Mobile) */}

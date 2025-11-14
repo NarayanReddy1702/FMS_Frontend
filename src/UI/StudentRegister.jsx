@@ -66,7 +66,7 @@ export default function StudentRegister() {
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br  from-orange-50 to-white ">
       <div className="bg-white p-8  rounded-2xl shadow-lg w-full max-w-3xl border border-orange-200 m-6">
         <h1 className="text-3xl font-bold text-center text-blue-600 mb-6">
-          Student Registration - FMS
+          Student Registration - CFMS
         </h1>
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">

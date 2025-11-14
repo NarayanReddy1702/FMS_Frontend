@@ -3,11 +3,11 @@ import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-300  px-6">
+    <footer className="bg-gray-900 text-gray-300  px-6 ">
       <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6 text-center sm:text-left">
         {/* 🟠 Left Section - Logo */}
-        <div className="text-3xl font-extrabold text-orange-500 tracking-wide">
-          <img className="w-40 object-cover" src="./rm_fms.png" alt="" />
+        <div className="text-3xl my-5 font-extrabold rounded-full overflow-hidden text-orange-500 tracking-wide">
+          <img className="w-30 object-cover" src="./fms_logo.png" alt="" />
         </div>
 
        
