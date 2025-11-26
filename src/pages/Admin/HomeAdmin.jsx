@@ -41,8 +41,8 @@ const HomeAdmin = () => {
   return (
     <div className='p-5'>
          <div className="flex gap-5 flex-wrap">
-        <Card length={userLength} title={"Total Users Register"} icon={<FaUsers size={28} />}/>
-        <Card length={studentLength} title={"Total Student Register"} icon={ <FaBook size={28} />}/>
+        <Card length={userLength} title={"Total Users Register"} router={"/admin/users"} icon={<FaUsers size={28} />}/>
+        <Card length={studentLength} title={"Total Student Register"} router={"/admin/students"} icon={ <FaBook size={28} />}/>
     </div>
     </div>
   )

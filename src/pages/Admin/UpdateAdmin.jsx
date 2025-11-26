@@ -81,8 +81,8 @@ const UpdateAdmin = () => {
       } else {
         toast.error(res.data.message || "Failed to update student");
       }
-    } catch {
-      toast.error("Server error");
+    } catch(error) {
+       toast.error(error.response?.data?.message || "Update failed");
     }
   };
 

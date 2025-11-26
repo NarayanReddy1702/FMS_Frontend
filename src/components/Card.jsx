@@ -1,7 +1,9 @@
+import { useNavigate } from "react-router-dom"
 
-const Card = ({length,title,icon}) => {
+const Card = ({length,title,icon,router}) => {
+  const navigate = useNavigate()
   return (
-    <div className="bg-white rounded-2xl w-80 shadow-md p-6 flex items-center gap-4 hover:shadow-lg transition">
+    <div onClick={()=>navigate(router)} className="bg-white rounded-2xl w-80 cursor-pointer shadow-md p-6 flex items-center gap-4 hover:shadow-lg transition">
           <div className="bg-blue-100 text-blue-600 p-4 rounded-full">
             {icon}
           </div>
