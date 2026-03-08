@@ -56,7 +56,7 @@ const AdminEdit = () => {
           localStorage.setItem("userDet", JSON.stringify(res.data?.user));
         }
 
-        navigate("/admin");
+        navigate("/admin/users");
       }
     } catch (error) {
       toast.error("Failed to update");

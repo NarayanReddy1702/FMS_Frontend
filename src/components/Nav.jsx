@@ -19,7 +19,7 @@ export default function Nav() {
     localStorage.removeItem("role");
     localStorage.removeItem("studentToken");
     localStorage.removeItem("studentDet");
-    localStorage.removeItem("userDet")
+    localStorage.removeItem("userDet");
     toast.success("Logout Successfully!");
     setTimeout(() => navigate("/login"), 1500);
   }
@@ -34,106 +34,43 @@ export default function Nav() {
   }
 
   return (
-    <nav className="bg-white shadow-md px-6 py-3 flex justify-between items-center relative">
-      {/* 🔷 Logo */}
-      <div
-        onClick={() => navigate("/")}
-        className="text-2xl font-bold text-blue-600 rounded-full overflow-hidden cursor-pointer select-none"
-      >
-       <img  className="object-cover w-20" src="./fms_logo.png" alt="" />
-      </div>
+    <nav className="sticky top-0 z-50 bg-purple-900 shadow-2xl">
+      <div className="px-6 py-3 flex justify-between items-center relative">
+        {/* 🔷 Logo */}
+        <div
+          onClick={() => navigate("/")}
+          className="flex items-center gap-3 cursor-pointer"
+        >
+          <img
+            src="./fms_logo.png"
+            alt="logo"
+            className="w-14 h-14 rounded-full bg-white p-1 shadow-lg"
+          />
+          <span className="hidden sm:block text-xl font-bold text-white tracking-wide">
+            CFMS Portal
+          </span>
+        </div>
 
-      {/* 🔹 Hamburger Menu (Visible on Mobile) */}
-      <button
-        onClick={() => setMenuOpen(!menuOpen)}
-        className="text-2xl cursor-pointer text-gray-700 md:hidden focus:outline-none"
-      >
-        {menuOpen ? <FaTimes /> : <FaBars />}
-      </button>
+        {/* 🍔 Hamburger */}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="md:hidden text-2xl text-white"
+        >
+          {menuOpen ? <FaTimes /> : <FaBars />}
+        </button>
 
-      {/* 🔸 Desktop Menu */}
-      <div className="hidden md:flex space-x-4 items-center">
-        {/* Not Logged In */}
-        {!userToken || !role ? (
-          <>
-            <NavLink to="/login">
-              <button className="px-4 py-2 cursor-pointer border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition duration-200">
-                Login
-              </button>
-            </NavLink>
-
-            <NavLink to="/register">
-              <button className="px-4 py-2 cursor-pointer bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200">
-                Signup
-              </button>
-            </NavLink>
-          </>
-        ) : role === "admin" ? (
-          // 🔴 Admin Section
-          <>
-            <button
-              onClick={handleLogoutAdmin}
-              className="px-4 py-2 cursor-pointer bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-200"
-            >
-              Logout
-            </button>
-
-            <div
-              onClick={() => navigate("/admin/profile")}
-              className="w-12 h-12 cursor-pointer rounded-full bg-gray-200 overflow-hidden border-2 border-gray-400"
-            >
-              <img
-                className="w-full h-full object-cover"
-                src={userDet?.profilePic || "https://via.placeholder.com/150"}
-                alt="Admin Profile"
-              />
-            </div>
-
-            <button
-              onClick={() => navigate("/admin")}
-              className="px-4 py-2 bg-blue-600 cursor-pointer text-white rounded-lg hover:bg-blue-700 transition duration-200"
-            >
-              Admin
-            </button>
-          </>
-        ) : (
-          // 🟢 User Section
-          <>
-            <button
-              onClick={handleLogout}
-              className="px-4 py-2 bg-red-600 cursor-pointer text-white rounded-lg hover:bg-red-700 transition duration-200"
-            >
-              Logout
-            </button>
-
-            <div
-              onClick={() => navigate("/profile")}
-              className="w-12 h-12 cursor-pointer  rounded-full bg-gray-200 overflow-hidden border-2 border-gray-400"
-            >
-              <img
-                className="w-full h-full object-cover"
-                src={studentDet?.profilePic || "https://via.placeholder.com/150"}
-                alt="User Profile"
-              />
-            </div>
-          </>
-        )}
-      </div>
-
-      {/* 🔸 Mobile Menu (Dropdown) */}
-      {menuOpen && (
-        <div className="absolute top-full left-0 w-full bg-white shadow-lg flex flex-col items-center py-4 space-y-4 md:hidden z-50 border-t">
-          {/* Not Logged In */}
+        {/* 🖥 Desktop Menu */}
+        <div className="hidden md:flex items-center gap-4">
           {!userToken || !role ? (
             <>
-              <NavLink to="/login" onClick={() => setMenuOpen(false)}>
-                <button className="px-4 py-2 border cursor-pointer border-blue-600 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition duration-200 w-40">
+              <NavLink to="/login">
+                <button className="px-5 py-2 rounded-full bg-white/20 backdrop-blur text-white border border-white/30 hover:bg-white hover:text-purple-700 transition font-medium shadow">
                   Login
                 </button>
               </NavLink>
 
-              <NavLink to="/register" onClick={() => setMenuOpen(false)}>
-                <button className="px-4 py-2 bg-blue-600 cursor-pointer text-white rounded-lg hover:bg-blue-700 transition duration-200 w-40">
+              <NavLink to="/register">
+                <button className="px-5 py-2 rounded-full bg-white text-purple-700 font-semibold shadow-lg hover:scale-105 transition">
                   Signup
                 </button>
               </NavLink>
@@ -141,68 +78,145 @@ export default function Nav() {
           ) : role === "admin" ? (
             <>
               <button
-                onClick={() => {
-                  handleLogoutAdmin();
-                  setMenuOpen(false);
-                }}
-                className="px-4 py-2 bg-red-600 cursor-pointer text-white rounded-lg hover:bg-red-700 transition duration-200 w-40"
+                onClick={handleLogoutAdmin}
+                className="px-4 py-2 rounded-full bg-rose-500 text-white hover:bg-rose-600 transition shadow-lg"
               >
                 Logout
               </button>
 
               <div
-                onClick={() => {
-                  navigate("/admin/profile");
-                  setMenuOpen(false);
-                }}
-                className="w-16 h-16 rounded-full bg-gray-200 overflow-hidden border-2 border-gray-400 cursor-pointer"
+                onClick={() => navigate("/admin/profile")}
+                className="w-11 h-11 rounded-full overflow-hidden border-2 border-white shadow-lg cursor-pointer hover:scale-110 transition"
               >
                 <img
                   className="w-full h-full object-cover"
                   src={userDet?.profilePic || "https://via.placeholder.com/150"}
-                  alt="Admin Profile"
+                  alt="Admin"
                 />
               </div>
 
               <button
-                onClick={() => {
-                  navigate("/admin");
-                  setMenuOpen(false);
-                }}
-                className="px-4 py-2 bg-blue-600  text-white rounded-lg hover:bg-blue-700 transition duration-200 w-40"
+                onClick={() => navigate("/admin")}
+                className="px-4 py-2 rounded-full bg-black/20 text-white backdrop-blur hover:bg-black/40 transition shadow"
               >
-                Admin Panel
+                Admin
               </button>
             </>
           ) : (
             <>
               <button
-                onClick={() => {
-                  handleLogout();
-                  setMenuOpen(false);
-                }}
-                className="px-4 py-2 cursor-pointer bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-200 w-40"
+                onClick={handleLogout}
+                className="px-4 py-2 rounded-full bg-rose-500 text-white hover:bg-rose-600 transition shadow-lg"
               >
                 Logout
               </button>
 
               <div
-                onClick={() => {
-                  navigate("/profile");
-                  setMenuOpen(false);
-                }}
-                className="w-16 h-16 rounded-full bg-gray-200 overflow-hidden border-2 border-gray-400 cursor-pointer"
+                onClick={() => navigate("/profile")}
+                className="w-11 h-11 rounded-full overflow-hidden border-2 border-white shadow-lg cursor-pointer hover:scale-110 transition"
               >
                 <img
                   className="w-full h-full object-cover"
-                  src={studentDet?.profilePic || "https://via.placeholder.com/150"}
-                  alt="User Profile"
+                  src={
+                    studentDet?.profilePic || "https://via.placeholder.com/150"
+                  }
+                  alt="User"
                 />
               </div>
             </>
           )}
         </div>
-      )}
+
+        {/* 📱 Mobile Menu */}
+        {menuOpen && (
+          <div className="absolute top-full left-0 w-full bg-white rounded-b-3xl shadow-2xl py-6 md:hidden">
+            <div className="flex flex-col items-center gap-4">
+              {!userToken || !role ? (
+                <>
+                  <NavLink to="/login" onClick={() => setMenuOpen(false)}>
+                    <button className="w-48 py-2 rounded-full bg-purple-600 text-white font-medium shadow">
+                      Login
+                    </button>
+                  </NavLink>
+
+                  <NavLink to="/register" onClick={() => setMenuOpen(false)}>
+                    <button className="w-48 py-2 rounded-full border border-purple-600 text-purple-600 font-medium">
+                      Signup
+                    </button>
+                  </NavLink>
+                </>
+              ) : role === "admin" ? (
+                <>
+                  <button
+                    onClick={() => {
+                      handleLogoutAdmin();
+                      setMenuOpen(false);
+                    }}
+                    className="w-48 py-2 rounded-full bg-rose-500 text-white shadow"
+                  >
+                    Logout
+                  </button>
+
+                  <div
+                    onClick={() => {
+                      navigate("/admin/profile");
+                      setMenuOpen(false);
+                    }}
+                    className="w-20 h-20 rounded-full overflow-hidden border-2 border-purple-600 shadow-lg"
+                  >
+                    <img
+                      className="w-full h-full object-cover"
+                      src={
+                        userDet?.profilePic || "https://via.placeholder.com/150"
+                      }
+                      alt="Admin"
+                    />
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      navigate("/admin");
+                      setMenuOpen(false);
+                    }}
+                    className="w-48 py-2 rounded-full bg-indigo-600 text-white shadow"
+                  >
+                    Admin Panel
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setMenuOpen(false);
+                    }}
+                    className="w-48 py-2 rounded-full bg-rose-500 text-white shadow"
+                  >
+                    Logout
+                  </button>
+
+                  <div
+                    onClick={() => {
+                      navigate("/profile");
+                      setMenuOpen(false);
+                    }}
+                    className="w-20 h-20 rounded-full overflow-hidden border-2 border-purple-600 shadow-lg"
+                  >
+                    <img
+                      className="w-full h-full object-cover"
+                      src={
+                        studentDet?.profilePic ||
+                        "https://via.placeholder.com/150"
+                      }
+                      alt="User"
+                    />
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
     </nav>
   );
 }

@@ -5,10 +5,11 @@ import BASE_URL from "../utils/Config";
 import { useNavigate } from "react-router-dom";
 
 export default function StudentRegister() {
-  const navigate = useNavigate()
-  const userDet = JSON.parse(localStorage.getItem("userDet"))
+  const navigate = useNavigate();
+  const userDet = JSON.parse(localStorage.getItem("userDet"));
+
   const [formData, setFormData] = useState({
-    firstName: userDet.username||"",
+    firstName: userDet.username || "",
     lastName: "",
     fathersName: "",
     mothersName: "",
@@ -16,7 +17,7 @@ export default function StudentRegister() {
     course: "",
     year: "",
     email: userDet.email || "",
-    gender:userDet.gender || "",
+    gender: userDet.gender || "",
     dateOfBirth: "",
     address: "",
   });
@@ -35,8 +36,8 @@ export default function StudentRegister() {
       });
 
       if (res.data?.success) {
-        localStorage.setItem("studentToken",res.data?.token)
-        localStorage.setItem("studentDet",JSON.stringify(res.data?.student))
+        localStorage.setItem("studentToken", res.data?.token);
+        localStorage.setItem("studentDet", JSON.stringify(res.data?.student));
         toast.success("Student registered successfully!");
         setFormData({
           firstName: "",
@@ -51,9 +52,7 @@ export default function StudentRegister() {
           dateOfBirth: "",
           address: "",
         });
-        setTimeout(()=>{
-         navigate("/")
-        },1000)
+        setTimeout(() => navigate("/"), 1000);
       } else {
         toast.error(res.data?.message || "Registration failed!");
       }
@@ -63,186 +62,214 @@ export default function StudentRegister() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br  from-orange-50 to-white ">
-      <div className="bg-white p-8  rounded-2xl shadow-lg w-full max-w-3xl border border-orange-200 m-6">
-        <h1 className="text-3xl font-bold text-center text-blue-600 mb-6">
-          Student Registration - CFMS
-        </h1>
+    /* 🌈 Animated Gradient Background */
+    <div
+      className="min-h-screen flex items-center justify-center p-6
+      bg-gradient-to-br from-indigo-400 via-purple-400 to-pink-400
+      animate-gradient"
+    >
+      {/* Card Wrapper */}
+      <div className="relative w-full max-w-3xl">
+        <div className="absolute inset-0 rounded-3xl bg-white/30 blur-2xl"></div>
 
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* First Name */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">First Name</label>
-            <input
-              type="text"
-              name="firstName"
-              value={formData.firstName}
-              
-              placeholder="Enter first name"
-              className="w-full border bg-gray-200 border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
-              required
-              disabled
-            />
-          </div>
+        {/* Card */}
+        <div
+          className="relative bg-white/85 backdrop-blur-xl
+          rounded-3xl p-8 shadow-2xl border border-white"
+        >
+          <h1
+            className="text-3xl font-extrabold text-center mb-6
+            text-transparent bg-clip-text
+            bg-gradient-to-r from-indigo-600 to-purple-600"
+          >
+            Student Registration - CFMS
+          </h1>
 
-          {/* Last Name */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">Last Name</label>
-            <input
-              type="text"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
-              placeholder="Enter last name"
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
-            />
-          </div>
+          <form
+            onSubmit={handleSubmit}
+            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          >
+            {/* First Name */}
+            <div>
+              <label className="block text-gray-700 font-medium mb-1">
+                First Name
+              </label>
+              <input
+                type="text"
+                name="firstName"
+                value={formData.firstName}
+                disabled
+                className="w-full bg-gray-200 border border-gray-300
+                  rounded-xl px-4 py-2 outline-none"
+              />
+            </div>
 
-          {/* Father's Name */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">Father's Name</label>
-            <input
-              type="text"
-              name="fathersName"
-              value={formData.fathersName}
-              onChange={handleChange}
-              placeholder="Enter father's name"
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
-              required
-            />
-          </div>
+            {/* Last Name */}
+            <div>
+              <label className="block text-gray-700 font-medium mb-1">
+                Last Name
+              </label>
+              <input
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-xl
+                  px-4 py-2 focus:ring-2 focus:ring-purple-400 outline-none"
+              />
+            </div>
 
-          {/* Mother's Name */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">Mother's Name</label>
-            <input
-              type="text"
-              name="mothersName"
-              value={formData.mothersName}
-              onChange={handleChange}
-              placeholder="Enter mother's name"
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
-              required
-            />
-          </div>
+            {/* Father's Name */}
+            <div>
+              <label className="block text-gray-700 font-medium mb-1">
+                Father's Name
+              </label>
+              <input
+                type="text"
+                name="fathersName"
+                value={formData.fathersName}
+                onChange={handleChange}
+                required
+                className="w-full border border-gray-300 rounded-xl
+                  px-4 py-2 focus:ring-2 focus:ring-purple-400 outline-none"
+              />
+            </div>
 
-          {/* Phone Number */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">Phone Number</label>
-            <input
-              type="number"
-              name="phoneNo"
-              value={formData.phoneNo}
-              onChange={handleChange}
-              placeholder="Enter phone number"
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
-              required
-            />
-          </div>
+            {/* Mother's Name */}
+            <div>
+              <label className="block text-gray-700 font-medium mb-1">
+                Mother's Name
+              </label>
+              <input
+                type="text"
+                name="mothersName"
+                value={formData.mothersName}
+                onChange={handleChange}
+                required
+                className="w-full border border-gray-300 rounded-xl
+                  px-4 py-2 focus:ring-2 focus:ring-purple-400 outline-none"
+              />
+            </div>
 
-          {/* Email */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              placeholder="Enter email"
-              className="w-full border border-gray-300 bg-gray-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
-              required
-              disabled
-            />
-          </div>
+            {/* Phone */}
+            <div>
+              <label className="block text-gray-700 font-medium mb-1">
+                Phone Number
+              </label>
+              <input
+                type="number"
+                name="phoneNo"
+                value={formData.phoneNo}
+                onChange={handleChange}
+                required
+                className="w-full border border-gray-300 rounded-xl
+                  px-4 py-2 focus:ring-2 focus:ring-purple-400 outline-none"
+              />
+            </div>
 
-          {/* Course */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">Course</label>
-            <select
-              name="course"
-              value={formData.course}
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
-              required
-            >
-              <option value="">Select Course</option>
-              <option value="B.Tech">B.Tech</option>
-              <option value="MBA">MBA</option>
-              <option value="M.Tech">M.Tech</option>
-              <option value="Diploma">Diploma</option>
-            </select>
-          </div>
+            {/* Email */}
+            <div>
+              <label className="block text-gray-700 font-medium mb-1">
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                disabled
+                className="w-full bg-gray-200 border border-gray-300
+                  rounded-xl px-4 py-2 outline-none"
+              />
+            </div>
 
-          {/* Year */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">Year</label>
-            <select
-              name="year"
-              value={formData.year}
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
-              required
-            >
-              <option value="">Select Year</option>
-              <option value="1st">1st</option>
-              <option value="2nd">2nd</option>
-              <option value="3rd">3rd</option>
-              <option value="4th">4th</option>
-            </select>
-          </div>
+            {/* Course */}
+            <div>
+              <label className="block text-gray-700 font-medium mb-1">
+                Course
+              </label>
+              <select
+                name="course"
+                value={formData.course}
+                onChange={handleChange}
+                required
+                className="w-full border border-gray-300 rounded-xl
+                  px-4 py-2 focus:ring-2 focus:ring-purple-400 outline-none"
+              >
+                <option value="">Select Course</option>
+                <option>B.Tech</option>
+                <option>MBA</option>
+                <option>M.Tech</option>
+                <option>Diploma</option>
+              </select>
+            </div>
 
-          {/* Gender */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">Gender</label>
-            <select
-              name="gender"
-              value={formData.gender}
-              className="w-full border bg-gray-200 border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
-              required
-              gender
-            >
-              <option value="">Select Gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-          </div>
+            {/* Year */}
+            <div>
+              <label className="block text-gray-700 font-medium mb-1">
+                Year
+              </label>
+              <select
+                name="year"
+                value={formData.year}
+                onChange={handleChange}
+                required
+                className="w-full border border-gray-300 rounded-xl
+                  px-4 py-2 focus:ring-2 focus:ring-purple-400 outline-none"
+              >
+                <option value="">Select Year</option>
+                <option>1st</option>
+                <option>2nd</option>
+                <option>3rd</option>
+                <option>4th</option>
+              </select>
+            </div>
 
-          {/* Date of Birth */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">Date of Birth</label>
-            <input
-              type="date"
-              name="dateOfBirth"
-              value={formData.dateOfBirth}
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
-              required
-            />
-          </div>
+            {/* DOB */}
+            <div>
+              <label className="block text-gray-700 font-medium mb-1">
+                Date of Birth
+              </label>
+              <input
+                type="date"
+                name="dateOfBirth"
+                value={formData.dateOfBirth}
+                onChange={handleChange}
+                required
+                className="w-full border border-gray-300 rounded-xl
+                  px-4 py-2 focus:ring-2 focus:ring-purple-400 outline-none"
+              />
+            </div>
 
-          {/* Address (Full Width) */}
-          <div className="md:col-span-2">
-            <label className="block text-gray-700 font-medium mb-1">Address</label>
-            <textarea
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              placeholder="Enter full address"
-              rows="3"
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none resize-none"
-              required
-            ></textarea>
-          </div>
+            {/* Address */}
+            <div className="md:col-span-2">
+              <label className="block text-gray-700 font-medium mb-1">
+                Address
+              </label>
+              <textarea
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                rows="3"
+                required
+                className="w-full border border-gray-300 rounded-xl
+                  px-4 py-2 focus:ring-2 focus:ring-purple-400 outline-none resize-none"
+              />
+            </div>
 
-          {/* Submit Button */}
-          <div className="md:col-span-2">
-            <button
-              type="submit"
-              className="w-full cursor-pointer bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-lg shadow-md transition duration-300"
-            >
-              Register Student
-            </button>
-          </div>
-        </form>
+            {/* Button */}
+            <div className="md:col-span-2">
+              <button
+                type="submit"
+                className="w-full py-3 rounded-xl font-semibold text-white
+                  bg-gradient-to-r from-indigo-600 to-purple-600
+                  hover:scale-[1.03] hover:shadow-xl
+                  active:scale-[0.97] transition-all"
+              >
+                Register Student
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

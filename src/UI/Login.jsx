@@ -5,128 +5,163 @@ import { useNavigate, Link } from "react-router-dom";
 import BASE_URL from "../utils/Config";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-
- function Login() {
- 
+function Login() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  const [showPassword,setShowPassword]=useState(false)
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const res = await axios.post(`${BASE_URL}/user/login`, formData, {
-      withCredentials: true,
-    });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post(`${BASE_URL}/user/login`, formData, {
+        withCredentials: true,
+      });
 
-    if (res.data?.success) {
-      toast.success(res.data.message);
+      if (res.data?.success) {
+        toast.success(res.data.message);
 
-      // Save tokens and role
-      localStorage.setItem("userToken", res.data.token);
-      localStorage.setItem("role", res.data?.user?.role);
-      localStorage.setItem("userDet", JSON.stringify(res.data?.user));
+        localStorage.setItem("userToken", res.data.token);
+        localStorage.setItem("role", res.data?.user?.role);
+        localStorage.setItem("userDet", JSON.stringify(res.data?.user));
 
-      if (res.data.student) {
-        localStorage.setItem("studentDet", JSON.stringify(res.data.student));
-      }
+        if (res.data.student) {
+          localStorage.setItem("studentDet", JSON.stringify(res.data.student));
+        }
 
-      const role = res.data.user.role;
-      const studentDet = res.data.student;
+        const role = res.data.user.role;
+        const studentDet = res.data.student;
 
-      // ✅ Navigation logic
-      if (role === "admin") {
-        navigate("/admin");
-      } else if (role === "user" && !studentDet) {
-        navigate("/student-register");
-      } else if (role === "user" && studentDet) {
-        navigate("/");
+        if (role === "admin") navigate("/admin");
+        else if (role === "user" && !studentDet) navigate("/student-register");
+        else navigate("/");
       } else {
-        navigate("/");
+        toast.error(res.data?.message || "Invalid credentials");
       }
-    } else {
-      toast.error(res.data?.message || "Invalid credentials");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Login failed");
     }
-  } catch (error) {
-    console.error("Login error:", error);
-    toast.error(error.response?.data?.message || "Login failed");
-  }
-};
+  };
 
   return (
-     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br  px-5 from-orange-100 to-white">
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md border border-orange-200">
-        <h1 className="text-3xl font-bold text-center text-blue-600 mb-2">
-          Welcome  to CFMS
-        </h1>
-        <p className="text-gray-500 text-center mb-6">
-          Login to access your account
-        </p>
+    <div
+      className="min-h-screen flex items-center justify-center bg-cover bg-center relative px-4"
+      style={{
+        backgroundImage:
+          "url('https://giet.edu.in/wp-content/uploads/2023/02/bn1.jpg')",
+      }}
+    >
+      {/* 🤍 Very Light Overlay (NOT BLUR) */}
+      <div className="absolute inset-0 bg-white/10"></div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Email Field */}
-          <div>
-            <label className="block text-gray-700 mb-1 font-medium">Email</label>
-            <input
-              type="email"
-              name="email"
-              placeholder="Enter your email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none"
-              required
-            />
+      {/* 🔐 Login Card (Glass Effect) */}
+      <div
+        className="relative w-full max-w-md rounded-3xl p-[1px]
+  bg-gradient-to-br from-purple-600/50 via-indigo-600/40 to-pink-600/40
+  shadow-2xl"
+      >
+        <div
+          className="bg-gradient-to-br from-purple-50 via-indigo-50 to-pink-50
+    rounded-3xl p-8 border border-purple-200 backdrop-blur-xl"
+        >
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1
+              className="text-4xl font-extrabold text-transparent bg-clip-text
+        bg-gradient-to-r from-purple-700 via-indigo-700 to-pink-600"
+            >
+              CFMS Login
+            </h1>
+            <p className="text-purple-700 mt-2">
+              Secure access to your dashboard
+            </p>
           </div>
 
-          {/* Password Field with Eye Icon */}
-          <div>
-            <label className="block text-gray-700 mb-1 font-medium">Password</label>
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                placeholder="Enter your password"
-                value={formData.password}
-                onChange={handleChange}
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none pr-10"
-                required
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-2.5 text-gray-500 hover:text-blue-500"
-              >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </button>
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Email */}
+            <div>
+              <label className="text-sm font-medium text-purple-800">
+                Email Address
+              </label>
+              <div className="relative mt-1">
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="you@example.com"
+                  className="w-full rounded-xl border border-purple-300
+              bg-white px-4 py-2.5 text-purple-900
+              focus:ring-2 focus:ring-purple-500
+              focus:border-transparent outline-none transition"
+                  required
+                />
+              </div>
             </div>
-          </div>
 
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full bg-blue-500 cursor-pointer hover:bg-blue-600 text-white py-2 rounded-lg font-semibold transition duration-300"
-          >
-            Login
-          </button>
-        </form>
+            {/* Password */}
+            <div>
+              <label className="text-sm font-medium text-purple-800">
+                Password
+              </label>
+              <div className="relative mt-1">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="••••••••"
+                  className="w-full rounded-xl border border-purple-300
+              bg-white px-4 py-2.5 pr-12 text-purple-900
+              focus:ring-2 focus:ring-purple-500
+              focus:border-transparent outline-none transition"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2
+              text-purple-500 hover:text-purple-700 transition"
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </div>
+            </div>
 
-        <p className="text-center text-sm text-gray-500 mt-4">
-          Don’t have an account?{" "}
-          <Link to="/register" className="text-blue-500 hover:underline font-medium">
-            Sign Up
-          </Link>
-        </p>
+            {/* Button */}
+            <button
+              type="submit"
+              className="w-full mt-2 bg-gradient-to-r
+          from-purple-600 via-indigo-600 to-pink-600
+          text-white py-3 rounded-xl font-semibold
+          shadow-lg hover:shadow-xl hover:scale-[1.02]
+          active:scale-[0.97] transition-all"
+            >
+              Sign In
+            </button>
+          </form>
+
+          {/* Footer */}
+          <p className="text-center text-sm text-purple-700 mt-6">
+            Don’t have an account?{" "}
+            <Link
+              to="/register"
+              className="font-semibold text-indigo-600 hover:underline"
+            >
+              Sign Up
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );
 }
 
-export default Login
+export default Login;
