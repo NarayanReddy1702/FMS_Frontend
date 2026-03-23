@@ -14,6 +14,8 @@ import StudentAdmin from "../pages/Admin/StudentAdmin";
 import AdminProfile from "../pages/Admin/AdminProfile";
 import AdminEdit from "../pages/Admin/AdminEdit";
 import UpdateAdmin from "../pages/Admin/UpdateAdmin";
+import PaymentPage from "../components/PaymentPage";
+import AdminManagement from "../pages/Admin/AdminManagement";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +34,12 @@ const router = createBrowserRouter([
         path: "/profile",
         element: <ProtectedRouter>
             <ProfilePage />
+        </ProtectedRouter>,
+      },
+      {
+        path:"/payment/:id",
+        element:<ProtectedRouter>
+            <PaymentPage />
         </ProtectedRouter>,
       },
       {
@@ -65,6 +73,7 @@ const router = createBrowserRouter([
       { path: "/admin/users", element: <UserAdmin /> },
       { path: "/admin/students", element: <StudentAdmin /> },
       { path: "/admin/profile", element: <AdminProfile /> },
+      { path: "/admin/adminManagement", element: <AdminManagement /> },
      
     ],
   },

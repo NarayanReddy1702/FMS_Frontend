@@ -5,7 +5,7 @@ import BASE_URL from '../../utils/Config';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
-const UserAdmin = () => {
+const AdminManagement = () => {
 const navigate = useNavigate()
   const [allUser,setAllUser]=useState([])
 
@@ -55,7 +55,7 @@ const navigate = useNavigate()
             </thead>
 
             <tbody>
-              {allUser.filter((auth)=>auth.role !="admin").map((user, index) => (
+              {allUser.filter((auth)=>auth.role !="user").map((user, index) => (
                 <tr
                   key={user._id}
                   className="border-t hover:bg-gray-50 transition duration-150"
@@ -98,4 +98,4 @@ const navigate = useNavigate()
   );
 }
 
-export default UserAdmin
+export default AdminManagement

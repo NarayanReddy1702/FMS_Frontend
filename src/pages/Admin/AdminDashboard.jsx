@@ -13,6 +13,7 @@ import UserAdmin from "./UserAdmin";
 import StudentAdmin from "./StudentAdmin";
 import AdminProfile from "./AdminProfile";
 import toast from "react-hot-toast";
+import AdminManagement from "./AdminManagement";
 
 function AdminDashboard() {
   const userDet = JSON.parse(localStorage.getItem("userDet"));
@@ -54,7 +55,9 @@ function AdminDashboard() {
             to="/admin"
             onClick={() => setSidebarOpen(false)}
             className={`flex items-center gap-3 py-2 px-4 rounded-lg ${
-              location.pathname === "/admin" ? "bg-gray-700" : "hover:bg-gray-700"
+              location.pathname === "/admin"
+                ? "bg-gray-700"
+                : "hover:bg-gray-700"
             } transition`}
           >
             <FaHome /> <span>Home</span>
@@ -64,10 +67,24 @@ function AdminDashboard() {
             to="/admin/users"
             onClick={() => setSidebarOpen(false)}
             className={`flex items-center gap-3 py-2 px-4 rounded-lg ${
-              location.pathname === "/admin/users" ? "bg-gray-700" : "hover:bg-gray-700"
+              location.pathname === "/admin/users"
+                ? "bg-gray-700"
+                : "hover:bg-gray-700"
             } transition`}
           >
-            <FaUsers /> <span>Users</span>
+            <FaUsers /> <span>Users Management</span>
+          </Link>
+
+          <Link
+            to="/admin/adminManagement"
+            onClick={() => setSidebarOpen(false)}
+            className={`flex items-center gap-3 py-2 px-4 rounded-lg ${
+              location.pathname === "/admin/adminManagement"
+                ? "bg-gray-700"
+                : "hover:bg-gray-700"
+            } transition`}
+          >
+            <FaUsers /> <span>Admin Management</span>
           </Link>
 
           <Link
@@ -86,7 +103,9 @@ function AdminDashboard() {
             to="/admin/profile"
             onClick={() => setSidebarOpen(false)}
             className={`flex items-center gap-3 py-2 px-4 rounded-lg ${
-              location.pathname === "/admin/profile" ? "bg-gray-700" : "hover:bg-gray-700"
+              location.pathname === "/admin/profile"
+                ? "bg-gray-700"
+                : "hover:bg-gray-700"
             } transition`}
           >
             <GrUserAdmin /> <span>Admin Profile</span>
@@ -150,7 +169,7 @@ function AdminDashboard() {
             <StudentAdmin />
           ) : location.pathname === "/admin/profile" ? (
             <AdminProfile />
-          ) : (
+          ) : location.pathname === "/admin/adminManagement" ?(<AdminManagement />):(
             <div className="text-center text-gray-500 py-10 text-lg font-medium">
               Page Not Found
             </div>

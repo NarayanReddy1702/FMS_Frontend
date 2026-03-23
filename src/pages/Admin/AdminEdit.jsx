@@ -123,18 +123,21 @@ const AdminEdit = () => {
               />
             </div>
 
-            {/* Role */}
+            {/* Role — now editable by admin */}
             <div>
               <label className="block text-gray-700 font-medium mb-1">
                 Role
               </label>
-              <input
-                type="text"
+              <select
                 name="role"
                 value={formData.role}
-                disabled
-                className="w-full border border-gray-200 bg-gray-100 text-gray-500 rounded-lg px-4 py-2 text-sm sm:text-base"
-              />
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none text-sm sm:text-base"
+              >
+                <option value="">Select Role</option>
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+              </select>
             </div>
 
             {/* Gender */}
