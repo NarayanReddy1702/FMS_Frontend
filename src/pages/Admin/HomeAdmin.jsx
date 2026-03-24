@@ -14,7 +14,7 @@ const HomeAdmin = () => {
         const res =  await  axios.get(`${BASE_URl}/user/allUsers`,{},{withCredential:true})
         if(res.data?.success){
            setUserLength(res.data?.users.length)
-           console.log(res.data?.message);
+           //console.log(res.data?.message);
            
         }else{
         console.error(res.data?.message);
@@ -29,7 +29,7 @@ const HomeAdmin = () => {
           const res =  await  axios.get(`${BASE_URl}/student/all-student`,{},{withCredential:true})
         if(res.data?.success){
            setStudentLength(res.data?.student.length)
-           console.log(res.data?.message);
+          // console.log(res.data?.message);
            
         }else{
         console.error(res.data?.message);
