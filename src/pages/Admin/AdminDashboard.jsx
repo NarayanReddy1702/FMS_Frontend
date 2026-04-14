@@ -148,14 +148,25 @@ function AdminDashboard() {
             <span className="hidden sm:inline text-gray-700 font-medium">
               {userDet?.username}
             </span>
-            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border-2 border-gray-400">
-              <img
-                onClick={() => navigate("/admin/profile")}
-                src={userDet?.profilePic || "https://via.placeholder.com/150"}
-                alt="Profile"
-                className="w-full h-full object-cover cursor-pointer"
-              />
-            </div>
+         <div
+  onClick={() => navigate("/admin/profile")}
+  className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border-2 border-gray-400 cursor-pointer flex-shrink-0"
+>
+  {userDet?.profilePic ? (
+    <img
+      src={userDet.profilePic}
+      alt="Profile"
+      className="w-full h-full object-cover"
+      onError={(e) => { e.target.style.display = "none"; e.target.nextSibling.style.display = "flex"; }}
+    />
+  ) : null}
+  <div
+    style={{ display: userDet?.profilePic ? "none" : "flex" }}
+    className="w-full h-full bg-gradient-to-br from-orange-400 to-orange-600 items-center justify-center text-white font-bold text-sm md:text-base"
+  >
+    {userDet?.username?.charAt(0)?.toUpperCase() || "A"}
+  </div>
+</div>
           </div>
         </div>
 
