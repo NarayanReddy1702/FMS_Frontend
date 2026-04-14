@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import Card from '../../components/Card'
 import axios from 'axios'
-import BASE_URl from "../../utils/Config"
+import { BASE_URL } from "../../utils/Config"
 import { FaBook, FaUsers } from 'react-icons/fa'
 
 const HomeAdmin = () => {
@@ -11,7 +11,7 @@ const HomeAdmin = () => {
 
   useEffect(()=>{
   async function fetchAllUser(){
-        const res =  await  axios.get(`${BASE_URl}/user/allUsers`,{},{withCredential:true})
+        const res =  await  axios.get(`${BASE_URL}/user/allUsers`,{},{withCredential:true})
         if(res.data?.success){
            setUserLength(res.data?.users.length)
            //console.log(res.data?.message);

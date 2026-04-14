@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import BASE_URL from '../../utils/Config';
+import {BASE_URL} from '../../utils/Config';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 

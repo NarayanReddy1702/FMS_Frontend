@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
-import BASE_URL from "../../utils/Config";
+import { BASE_URL } from "../../utils/Config";
+
 
 const COURSE_CONFIG = {
   "B.Tech":  { totalFee: 500000,  totalYears: 4 },

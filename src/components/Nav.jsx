@@ -3,17 +3,87 @@ import toast from "react-hot-toast";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 
+function AvatarFallback({ name, size = "sm" }) {
+  const letter = name?.charAt(0)?.toUpperCase() || "U";
+  const sizeStyles =
+    size === "sm"
+      ? { width: "44px", height: "44px", fontSize: "17px" }
+      : { width: "80px", height: "80px", fontSize: "30px" };
+
+  return (
+    <div
+      style={{
+        ...sizeStyles,
+        borderRadius: "50%",
+        background: "linear-gradient(135deg, #7c3aed, #a855f7)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        color: "#fff",
+        fontWeight: "600",
+        border: "2px solid rgba(255,255,255,0.8)",
+        boxShadow: "0 2px 8px rgba(124,58,237,0.4)",
+        flexShrink: 0,
+        cursor: "pointer",
+        userSelect: "none",
+      }}
+    >
+      {letter}
+    </div>
+  );
+}
+
+// ✅ Fixed ProfileAvatar with imgError fallback
+function ProfileAvatar({ det, navigateTo, size = "sm" }) {
+  const navigate = useNavigate();
+  const [imgError, setImgError] = useState(false);
+
+  const dimension = size === "sm" ? "44px" : "80px";
+
+  return (
+    <div
+      onClick={() => navigate(navigateTo)}
+      className="hover:scale-110 transition"
+      style={{ cursor: "pointer" }}
+    >
+      {det?.profilePic && !imgError ? (
+        <div
+          style={{
+            width: dimension,
+            height: dimension,
+            borderRadius: "50%",
+            overflow: "hidden",
+            border: "2px solid rgba(255,255,255,0.8)",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+          }}
+        >
+          <img
+            className="w-full h-full object-cover"
+            src={det.profilePic}
+            alt="Profile"
+            onError={() => setImgError(true)}
+          />
+        </div>
+      ) : (
+        <AvatarFallback
+          name={det?.firstName || det?.username || det?.name || "U"}
+          size={size}
+        />
+      )}
+    </div>
+  );
+}
+
 export default function Nav() {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const role = localStorage.getItem("role");
   const userToken = localStorage.getItem("userToken");
-  const studentToken = localStorage.getItem("studentToken");
   const studentDet = JSON.parse(localStorage.getItem("studentDet"));
   const userDet = JSON.parse(localStorage.getItem("userDet"));
 
-  // 🟢 Logout for Normal User
+  // ✅ Normal user logout
   function handleLogout() {
     localStorage.removeItem("userToken");
     localStorage.removeItem("role");
@@ -24,7 +94,7 @@ export default function Nav() {
     setTimeout(() => navigate("/login"), 1500);
   }
 
-  // 🔴 Logout for Admin
+  // ✅ Admin logout
   function handleLogoutAdmin() {
     localStorage.removeItem("userToken");
     localStorage.removeItem("role");
@@ -34,9 +104,10 @@ export default function Nav() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 bg-purple-900 shadow-2xl">
+    <nav className="sticky top-0 z-50 bg-blue-900 shadow-2xl">
       <div className="px-6 py-3 flex justify-between items-center relative">
-        {/* 🔷 Logo */}
+
+        {/* Logo */}
         <div
           onClick={() => navigate("/")}
           className="flex items-center gap-3 cursor-pointer"
@@ -51,7 +122,7 @@ export default function Nav() {
           </span>
         </div>
 
-        {/* 🍔 Hamburger */}
+        {/* Hamburger */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className="md:hidden text-2xl text-white"
@@ -59,7 +130,7 @@ export default function Nav() {
           {menuOpen ? <FaTimes /> : <FaBars />}
         </button>
 
-        {/* 🖥 Desktop Menu */}
+        {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-4">
           {!userToken || !role ? (
             <>
@@ -68,7 +139,6 @@ export default function Nav() {
                   Login
                 </button>
               </NavLink>
-
               <NavLink to="/register">
                 <button className="px-5 py-2 rounded-full bg-white text-purple-700 font-semibold shadow-lg hover:scale-105 transition">
                   Signup
@@ -83,18 +153,8 @@ export default function Nav() {
               >
                 Logout
               </button>
-
-              <div
-                onClick={() => navigate("/admin/profile")}
-                className="w-11 h-11 rounded-full overflow-hidden border-2 border-white shadow-lg cursor-pointer hover:scale-110 transition"
-              >
-                <img
-                  className="w-full h-full object-cover"
-                  src={userDet?.profilePic || "https://via.placeholder.com/150"}
-                  alt="Admin"
-                />
-              </div>
-
+              {/* ✅ Admin uses userDet */}
+              <ProfileAvatar det={userDet} navigateTo="/admin/profile" size="sm" />
               <button
                 onClick={() => navigate("/admin")}
                 className="px-4 py-2 rounded-full bg-black/20 text-white backdrop-blur hover:bg-black/40 transition shadow"
@@ -110,24 +170,13 @@ export default function Nav() {
               >
                 Logout
               </button>
-
-              <div
-                onClick={() => navigate("/profile")}
-                className="w-11 h-11 rounded-full overflow-hidden border-2 border-white shadow-lg cursor-pointer hover:scale-110 transition"
-              >
-                <img
-                  className="w-full h-full object-cover"
-                  src={
-                    studentDet?.profilePic || "https://via.placeholder.com/150"
-                  }
-                  alt="User"
-                />
-              </div>
+              {/* ✅ Student uses studentDet */}
+              <ProfileAvatar det={studentDet} navigateTo="/profile" size="sm" />
             </>
           )}
         </div>
 
-        {/* 📱 Mobile Menu */}
+        {/* Mobile Menu */}
         {menuOpen && (
           <div className="absolute top-full left-0 w-full bg-white rounded-b-3xl shadow-2xl py-6 md:hidden">
             <div className="flex flex-col items-center gap-4">
@@ -138,7 +187,6 @@ export default function Nav() {
                       Login
                     </button>
                   </NavLink>
-
                   <NavLink to="/register" onClick={() => setMenuOpen(false)}>
                     <button className="w-48 py-2 rounded-full border border-purple-600 text-purple-600 font-medium">
                       Signup
@@ -148,36 +196,26 @@ export default function Nav() {
               ) : role === "admin" ? (
                 <>
                   <button
-                    onClick={() => {
-                      handleLogoutAdmin();
-                      setMenuOpen(false);
-                    }}
+                    onClick={() => { handleLogoutAdmin(); setMenuOpen(false); }}
                     className="w-48 py-2 rounded-full bg-rose-500 text-white shadow"
                   >
                     Logout
                   </button>
 
-                  <div
-                    onClick={() => {
-                      navigate("/admin/profile");
-                      setMenuOpen(false);
-                    }}
-                    className="w-20 h-20 rounded-full overflow-hidden border-2 border-purple-600 shadow-lg"
-                  >
-                    <img
-                      className="w-full h-full object-cover"
-                      src={
-                        userDet?.profilePic || "https://via.placeholder.com/150"
-                      }
-                      alt="Admin"
-                    />
+                  {/* ✅ Admin mobile avatar — uses ProfileAvatar with imgError fix */}
+                  <div onClick={() => { navigate("/admin/profile"); setMenuOpen(false); }}>
+                    <ProfileAvatar det={userDet} navigateTo="/admin/profile" size="lg" />
                   </div>
 
+                  {/* ✅ Admin name — uses correct fields */}
+                  {(userDet?.firstName || userDet?.username || userDet?.name) && (
+                    <p className="text-sm font-semibold text-purple-800 -mt-1">
+                      {userDet?.firstName || userDet?.username || userDet?.name}
+                    </p>
+                  )}
+
                   <button
-                    onClick={() => {
-                      navigate("/admin");
-                      setMenuOpen(false);
-                    }}
+                    onClick={() => { navigate("/admin"); setMenuOpen(false); }}
                     className="w-48 py-2 rounded-full bg-indigo-600 text-white shadow"
                   >
                     Admin Panel
@@ -186,31 +224,23 @@ export default function Nav() {
               ) : (
                 <>
                   <button
-                    onClick={() => {
-                      handleLogout();
-                      setMenuOpen(false);
-                    }}
+                    onClick={() => { handleLogout(); setMenuOpen(false); }}
                     className="w-48 py-2 rounded-full bg-rose-500 text-white shadow"
                   >
                     Logout
                   </button>
 
-                  <div
-                    onClick={() => {
-                      navigate("/profile");
-                      setMenuOpen(false);
-                    }}
-                    className="w-20 h-20 rounded-full overflow-hidden border-2 border-purple-600 shadow-lg"
-                  >
-                    <img
-                      className="w-full h-full object-cover"
-                      src={
-                        studentDet?.profilePic ||
-                        "https://via.placeholder.com/150"
-                      }
-                      alt="User"
-                    />
+                  {/* ✅ Student mobile avatar — uses ProfileAvatar with imgError fix */}
+                  <div onClick={() => { navigate("/profile"); setMenuOpen(false); }}>
+                    <ProfileAvatar det={studentDet} navigateTo="/profile" size="lg" />
                   </div>
+
+                  {/* ✅ Student name — uses correct fields */}
+                  {(studentDet?.firstName || studentDet?.username || studentDet?.name) && (
+                    <p className="text-sm font-semibold text-purple-800 -mt-1">
+                      {studentDet?.firstName || studentDet?.username || studentDet?.name}
+                    </p>
+                  )}
                 </>
               )}
             </div>

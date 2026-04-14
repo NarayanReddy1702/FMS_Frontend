@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
-import BASE_URL from "../utils/Config";
+import {BASE_URL} from "../utils/Config";
 
 /* ─── helpers ─────────────────────────────────────────────────────────────── */
 const inr = (n) =>
